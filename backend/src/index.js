@@ -1,0 +1,24 @@
+import express from "express"
+import dotenv from 'dotenv'
+import authRoutes from "./routes/auth.routes.js"
+
+
+dotenv.config()
+
+const port = process.env.PORT || 8081
+const app = express()
+app.use(express.json())
+
+
+app.get('/' , (req,res)=>{
+    res.send("Hello guys welcome to leetlab")
+})
+
+
+
+
+app.use("/api/v1/auth", authRoutes)
+
+app.listen(port, ()=>{
+    console.log(`Server is running on ${port}`)
+})
