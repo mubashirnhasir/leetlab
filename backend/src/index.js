@@ -4,8 +4,6 @@ import cookieParser from "cookie-parser"
 
 import authRoutes from "./routes/auth.routes.js"
 
-
-
 dotenv.config()
 
 const port = process.env.PORT || 8081
