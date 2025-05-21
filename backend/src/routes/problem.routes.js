@@ -5,7 +5,7 @@ import { createProblem, deleteProblem, getAllProblems, getAllProblemsSolvedByUse
 
 const problemRoutes = express.Router()
 
-problemRoutes.post("/createproblem", authMiddleware , checkAdmin, createProblem)
+problemRoutes.post("/create-problem", authMiddleware , checkAdmin, createProblem)
 
 problemRoutes.get("/getallproblems", authMiddleware, getAllProblems)
 

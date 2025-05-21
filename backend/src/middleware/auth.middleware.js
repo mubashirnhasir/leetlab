@@ -58,35 +58,28 @@ export const authMiddleware = async (req, res, next) => {
 }
 
 
-export const checkAdmin = async (req, res, next) => {
-
+export const checkAdmin  = async(req , res , next)=>{
     try {
-       
-        const isAdmin = req.user.id;
-
-        const validateAdmin = await isAdmin.findUnique({
+        const userId = req.user.id;
+        
+        const user = await db.user.findUnique({
             where:{
-                id:isAdmin,
+                id:userId
             },
             select:{
                 role:true
             }
-
         })
 
-        if(!isAdmin || validateAdmin.role !== "ADMIN"){
-            return res.status(401).json({
-                message:"You are not authorized - Admins only"
+        if(!user || user.role !== "ADMIN"){
+            return res.status(403).json({
+                message:"Access denied - Admins only"
             })
         }
 
-
-        next()
-
-
-   } catch (error) {
-
-    console.log("Error checking admin role", error)
-    res.status(500).json({message:"Error checking admin role"})
+        next();
+    } catch (error) {
+        console.error("Error checking admin role:", error);
+        res.status(500).json({message:"Error checking admin role"});
     }
 }

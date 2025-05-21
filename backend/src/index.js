@@ -7,11 +7,13 @@ import problemRoutes from "./routes/problem.routes.js"
 
 dotenv.config()
 
-const port = process.env.PORT || 8081
-const app = express()
 
+const port = process.env.PORT || 8081
+
+const app = express()
 app.use(express.json())
 app.use(cookieParser())
+app.use(express.urlencoded({ extended: true }));
 
 app.get('/' , (req,res)=>{
     res.send("Hello guys welcome to leetlab")

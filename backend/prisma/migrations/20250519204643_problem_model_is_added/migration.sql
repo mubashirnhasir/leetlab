@@ -10,7 +10,7 @@ CREATE TABLE "Problem" (
     "tag" TEXT[],
     "userId" TEXT NOT NULL,
     "examples" JSONB NOT NULL,
-    "constrains" TEXT NOT NULL,
+    "constraints" TEXT NOT NULL,
     "hints" TEXT,
     "editorial" TEXT,
     "testcases" JSONB NOT NULL,
