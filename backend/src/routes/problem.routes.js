@@ -7,15 +7,13 @@ const problemRoutes = express.Router()
 
 problemRoutes.post("/create-problem", authMiddleware , checkAdmin, createProblem)
 
-problemRoutes.get("/getallproblems", authMiddleware, getAllProblems)
+problemRoutes.get("/get-all-problems", authMiddleware, getAllProblems)
 
 problemRoutes.get("/get-problem/:id", authMiddleware , getSingleProblem)
 
 problemRoutes.put("/update-problem/:id", authMiddleware, checkAdmin, updateProblem)
 
 problemRoutes.delete("/delete-problem/:id", authMiddleware, checkAdmin, deleteProblem)
-
-
 
 
 problemRoutes.get("/get-solved-problem", authMiddleware, getAllProblemsSolvedByUser)
