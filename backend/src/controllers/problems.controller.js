@@ -148,8 +148,6 @@ export const updateProblem = async (req, res) => {
 }
 
 
-
-
 export const deleteProblem = async (req, res) => {
   try {
     const { id } = req.params
