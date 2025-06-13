@@ -141,7 +141,6 @@ export const updateProblem = async (req, res) => {
 
   const { id } = req.params;
 
-
   const {
     title,
     description,
@@ -160,7 +159,6 @@ export const updateProblem = async (req, res) => {
   if (req.user.role !== "ADMIN") {
     return res.status(403).json({ error: "You are not allowed to create a problem" });
   }
-
 
   try {
 
@@ -195,18 +193,18 @@ export const updateProblem = async (req, res) => {
     }
 
     const updated = await db.problem.update({
-       where: { id },
-      data:{
-        ...(title  !== undefined && { title }),
-        ...(description  !== undefined && { description }),
-        ...(difficulty  !== undefined && { difficulty }),
-        ...(tags  !== undefined && { tags }),
-        ...(examples  !== undefined && { examples }),
-        ...(constraints  !== undefined && { constraints }),
-        ...(hints  !== undefined && { hints }),
-        ...(testcases  !== undefined && { testcases }),
-        ...(codeSnippets  !== undefined && { codeSnippets }),
-        ...(referenceSolutions  !== undefined && { referenceSolutions }),
+      where: { id },
+      data: {
+        ...(title !== undefined && { title }),
+        ...(description !== undefined && { description }),
+        ...(difficulty !== undefined && { difficulty }),
+        ...(tags !== undefined && { tags }),
+        ...(examples !== undefined && { examples }),
+        ...(constraints !== undefined && { constraints }),
+        ...(hints !== undefined && { hints }),
+        ...(testcases !== undefined && { testcases }),
+        ...(codeSnippets !== undefined && { codeSnippets }),
+        ...(referenceSolutions !== undefined && { referenceSolutions }),
       }
     })
 
@@ -217,7 +215,7 @@ export const updateProblem = async (req, res) => {
     });
 
   } catch (error) {
-       console.error("Error updating problem:", error);
+    console.error("Error updating problem:", error);
     return res.status(500).json({ error: "Error while updating problem" });
   }
 
@@ -253,4 +251,34 @@ export const deleteProblem = async (req, res) => {
 }
 
 
-export const getAllProblemsSolvedByUser = (req, res) => { }
+export const getAllProblemsSolvedByUser = async (req, res) => {
+
+  try {
+    const problems = await db.problem.findMany({
+      where: {
+        solvedBy: {
+          some: {
+            userId: req.user.id
+          }
+        }
+      },
+      include: {
+        solvedBy: {
+          where: {
+            userId: req.user.id
+          }
+        }
+      }
+    })
+
+    res.status(200).json({
+      success: true,
+      message: "Problem fetched successfully",
+      problems
+    })
+  } catch (error) {
+    console.error("Error fetching problems :", error);
+    res.status(500).json({ error: "Failed to fetch problems" })
+  }
+
+}
