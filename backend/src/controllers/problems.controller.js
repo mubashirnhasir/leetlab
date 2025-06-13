@@ -1,6 +1,5 @@
 import bcrypt from "bcryptjs"
 import { db } from '../libs/db.js'
-import { UserRole } from "../generated/prisma/index.js"
 import jwt from "jsonwebtoken"
 import { getJudge0LanguageId, pollBatchResults, submitBatch } from "../libs/judge0.libs.js"
 
@@ -195,8 +194,6 @@ export const updateProblem = async (req, res) => {
       }
     }
 
-
-
     const updated = await db.problem.update({
        where: { id },
       data:{
@@ -212,7 +209,6 @@ export const updateProblem = async (req, res) => {
         ...(referenceSolutions  !== undefined && { referenceSolutions }),
       }
     })
-
 
     return res.status(201).json({
       success: true,
